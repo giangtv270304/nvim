@@ -1,7 +1,7 @@
 return {
   "folke/flash.nvim",
   event = "VeryLazy",
-  vscode = true, -- giữ hoạt động trong VSCode Neovim (vscode extra chỉ bật leap.nvim theo mặc định)
+  vscode = true, -- keep working in VSCode Neovim (the vscode extra only enables leap.nvim by default)
   opts = {},
   keys = {
     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash jump" },

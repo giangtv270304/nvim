@@ -1,11 +1,11 @@
 return {
 	"windwp/nvim-autopairs",
-	event = "InsertEnter",   -- chỉ cần khi bắt đầu gõ
+	event = "InsertEnter",
 	config = function()
 		local autopairs = require("nvim-autopairs")
-		autopairs.setup({})   -- gõ ( { [ " ' → tự thêm cặp đóng
+		autopairs.setup({}) -- typing ( { [ " ' auto-inserts the closing pair
 
-		-- Nối với nvim-cmp: chọn 1 hàm trong menu → tự thêm ()
+		-- Hook into nvim-cmp: selecting a function in the completion menu auto-adds ()
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local cmp = require("cmp")
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

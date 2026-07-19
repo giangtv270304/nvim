@@ -1,8 +1,8 @@
 return {
   "ThePrimeagen/harpoon",
-  branch = "harpoon2", -- bản mới, API sạch hơn
+  branch = "harpoon2", -- newer branch, cleaner API
   dependencies = { "nvim-lua/plenary.nvim" },
-  -- Nạp khi bấm 1 trong các phím dưới, thay vì load ngay lúc mở nvim
+  -- Load on first use of one of these keys instead of at startup
   keys = {
     "<leader>a",
     "<C-e>",
@@ -19,22 +19,22 @@ return {
 
     local map = vim.keymap.set
 
-    -- Ghim file hiện tại vào danh sách
-    map("n", "<leader>a", function() harpoon:list():add() end, { desc = "Harpoon: ghim file" })
+    -- Pin the current file to the list
+    map("n", "<leader>a", function() harpoon:list():add() end, { desc = "Harpoon: pin file" })
 
-    -- Mở menu xem/sắp xếp các file đã ghim
+    -- Open the menu to view/reorder pinned files
     map("n", "<C-e>", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end, { desc = "Harpoon: menu" })
 
-    -- Nhảy tới file đã ghim thứ 1..4
+    -- Jump to pinned file 1..4
     map("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon: file 1" })
     map("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon: file 2" })
     map("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: file 3" })
     map("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon: file 4" })
 
-    -- Nhảy tới file ghim trước / sau trong danh sách
-    map("n", "[h", function() harpoon:list():prev() end, { desc = "Harpoon: file trước" })
-    map("n", "]h", function() harpoon:list():next() end, { desc = "Harpoon: file sau" })
+    -- Jump to the previous / next pinned file in the list
+    map("n", "[h", function() harpoon:list():prev() end, { desc = "Harpoon: previous file" })
+    map("n", "]h", function() harpoon:list():next() end, { desc = "Harpoon: next file" })
   end,
 }

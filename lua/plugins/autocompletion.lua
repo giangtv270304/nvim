@@ -1,17 +1,18 @@
 return {
   "hrsh7th/nvim-cmp",
-  -- Nạp cùng lúc mở file (giống nvim-lspconfig) thay vì đợi InsertEnter:
-  -- cmp-nvim-lsp được require sớm ở lsp.lua và tự đăng ký 1 autocmd InsertEnter
-  -- nội bộ đòi hỏi module 'cmp' phải có sẵn; nếu nvim-cmp còn đợi InsertEnter
-  -- riêng thì 2 autocmd đua nhau, có lúc "module 'cmp' not found".
+  -- Load as soon as a file is opened (same as nvim-lspconfig) instead of
+  -- waiting for InsertEnter: cmp-nvim-lsp is required early in lsp.lua and
+  -- registers its own internal InsertEnter autocmd that expects the 'cmp'
+  -- module to already exist. If nvim-cmp waited for its own InsertEnter too,
+  -- the two autocmds would race and sometimes hit "module 'cmp' not found".
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp", -- nguồn: LSP
-    "hrsh7th/cmp-buffer",   -- nguồn: text trong buffer
-    "hrsh7th/cmp-path",     -- nguồn: đường dẫn file
+    "hrsh7th/cmp-nvim-lsp", -- source: LSP
+    "hrsh7th/cmp-buffer",   -- source: buffer text
+    "hrsh7th/cmp-path",     -- source: file paths
     {
       "L3MON4D3/LuaSnip",
-      dependencies = { "rafamadriz/friendly-snippets" }, -- snippet dựng sẵn
+      dependencies = { "rafamadriz/friendly-snippets" }, -- prebuilt snippets
     },
     "saadparwaiz1/cmp_luasnip",
   },
@@ -19,7 +20,7 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
 
-    -- Nạp snippet vscode-style (friendly-snippets)
+    -- Load VSCode-style snippets (friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
 
     cmp.setup({
@@ -28,14 +29,14 @@ return {
       },
       completion = { completeopt = "menu,menuone,noinsert" },
       mapping = cmp.mapping.preset.insert({
-        ["<C-Space>"] = cmp.mapping.complete(),          -- gọi gợi ý thủ công
-        ["<C-e>"] = cmp.mapping.abort(),                 -- đóng menu
-        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Enter chọn
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),          -- cuộn ô docs
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        -- Tab: xuống menu / nhảy trong snippet
+        -- Tab: move down the menu / jump within a snippet
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()

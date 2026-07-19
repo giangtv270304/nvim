@@ -25,13 +25,13 @@ return {
 			close_if_last_window = true,
 			window = {
 				mappings = {
-					["l"] = "open", -- l: mở file / mở rộng folder
-					["h"] = "close_node", -- h: đóng folder
-					["<space>"] = "none", -- bỏ toggle của Space để không đè phím leader
+					["l"] = "open", -- l: open file / expand folder
+					["h"] = "close_node", -- h: collapse folder
+					["<space>"] = "none", -- disable Space toggle so it doesn't shadow the leader key
 				},
 			},
 			filesystem = {
-				hijack_netrw_behavior = "open_default", -- mở dạng sidebar bên trái
+				hijack_netrw_behavior = "open_default", -- open as a left sidebar
 				follow_current_file = { enabled = true },
 				use_libuv_file_watcher = true,
 			},

@@ -3,11 +3,11 @@ return {
   tag = "0.1.8",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- sort nhanh (cần C compiler)
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- fast sorting (needs a C compiler)
     "nvim-tree/nvim-web-devicons",
   },
   cmd = "Telescope",
-  -- Nạp khi bấm 1 trong các phím dưới, thay vì load ngay lúc mở nvim
+  -- Load on first use of one of these keys instead of at startup
   keys = {
     "<leader>ff",
     "<leader>fg",
@@ -27,9 +27,10 @@ return {
       defaults = {
         path_display = { "truncate" },
         file_ignore_patterns = { "node_modules", "%.git/", "%.terraform/", "vendor/", "%.terragrunt%-cache/" },
-        -- nvim-treesitter bản "main" (LazyVim dùng) bỏ API cũ mà previewer của
-        -- Telescope cần (`nvim-treesitter.parsers.get_parser`) -> tắt để tránh
-        -- crash khi xem preview; buffer preview vẫn tô màu bằng :syntax thường.
+        -- The "main" branch of nvim-treesitter (which LazyVim uses) dropped the
+        -- old API Telescope's previewer needs (`nvim-treesitter.parsers.get_parser`)
+        -- -> disable it to avoid crashing on preview; the buffer preview still
+        -- gets highlighted via plain :syntax.
         preview = { treesitter = false },
         mappings = {
           i = {

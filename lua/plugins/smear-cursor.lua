@@ -2,22 +2,23 @@ return {
   "sphamba/smear-cursor.nvim",
   event = "VeryLazy",
   opts = {
-    -- kiểu Gruvbox: để cursor tự lấy màu highlight hiện tại thay vì set cứng
+    -- Gruvbox-style: let the cursor pick up the current highlight color
+    -- instead of a hardcoded one
     cursor_color = nil,
     smear_between_buffers = true,
     smear_between_neighbor_lines = true,
     scroll_buffer_space = true,
     legacy_computing_symbols_support = false,
 
-    -- Trước đây giảm các số này để né giật do WezTerm bật blur nền + gõ
-    -- nhanh cộng dồn chi phí render. Blur đã tắt hẳn trong wezterm.lua
-    -- (macos_window_background_blur = 0) nên đưa lại gần mặc định của
-    -- plugin để animation dài/mượt/rõ hơn. Nếu sau này thấy giật khi gõ
-    -- nhanh trở lại, hạ dần các số này xuống (time_interval tăng, các số
-    -- còn lại giảm).
-    time_interval = 17, -- mặc định: 60fps
-    max_length = 20, -- mặc định 25 - vệt dài, dễ thấy hơn nhưng vẫn nhẹ hơn max
-    stiffness = 0.6, -- mặc định: vệt "đuổi" đích chậm hơn -> animation rõ hơn
-    trailing_stiffness = 0.45, -- mặc định
+    -- These used to be lowered to avoid stutter from WezTerm's background
+    -- blur plus fast typing piling up render cost. Blur is now fully off
+    -- (macos_window_background_blur = 0 in wezterm.lua), so these are back
+    -- closer to the plugin defaults for a longer/smoother/more visible
+    -- animation. If typing-fast stutter comes back, lower these again
+    -- (raise time_interval, lower the rest).
+    time_interval = 17, -- default: 60fps
+    max_length = 20, -- default 25 — longer trail, more visible but still lighter than max
+    stiffness = 0.6, -- default: trail "chases" the target more slowly -> clearer animation
+    trailing_stiffness = 0.45, -- default
   },
 }

@@ -1,14 +1,14 @@
--- [[ Autocommands & nhận diện filetype ]]
+-- Autocommands & filetype detection
 local augroup = function(name) return vim.api.nvim_create_augroup("cfg_" .. name, { clear = true }) end
 local autocmd = vim.api.nvim_create_autocmd
 
--- Nhấp nháy vùng vừa yank
+-- Briefly flash the yanked region
 autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
   callback = function() vim.hl.on_yank({ timeout = 200 }) end,
 })
 
--- Go / Makefile dùng TAB thật (gofmt & make yêu cầu)
+-- Go / Makefile need real tabs (gofmt and make require it)
 autocmd("FileType", {
   group = augroup("tab_indent"),
   pattern = { "go", "gomod", "gowork", "make" },
@@ -19,7 +19,7 @@ autocmd("FileType", {
   end,
 })
 
--- Tự bỏ khoảng trắng thừa cuối dòng khi lưu (trừ markdown)
+-- Trim trailing whitespace on save (except markdown)
 autocmd("BufWritePre", {
   group = augroup("trim_whitespace"),
   callback = function()
@@ -30,7 +30,7 @@ autocmd("BufWritePre", {
   end,
 })
 
--- Nhận diện filetype cho stack DevOps
+-- Filetype detection for the DevOps stack
 vim.filetype.add({
   filename = {
     ["Dockerfile"] = "dockerfile",

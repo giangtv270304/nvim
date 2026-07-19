@@ -5,18 +5,18 @@ return {
     { "mason-org/mason.nvim", opts = {} },
     "mason-org/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    "hrsh7th/nvim-cmp", -- nạp cùng lúc với LSP để tránh race "module 'cmp' not found"
+    "hrsh7th/nvim-cmp", -- load alongside LSP to avoid a "module 'cmp' not found" race
     "hrsh7th/cmp-nvim-lsp",
-    "b0o/SchemaStore.nvim", -- schema JSON/YAML (k8s, github actions, compose...)
+    "b0o/SchemaStore.nvim", -- JSON/YAML schemas (k8s, GitHub Actions, compose...)
   },
   config = function()
     require("mason").setup()
 
-    -- Capabilities chung: báo cho mọi server biết nvim-cmp làm được gì
+    -- Shared capabilities: tell every server what nvim-cmp supports
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     vim.lsp.config("*", { capabilities = capabilities })
 
-    -- ===== Cấu hình riêng từng server =====
+    -- ===== Per-server config =====
     vim.lsp.config("lua_ls", {
       settings = {
         Lua = {
@@ -70,32 +70,32 @@ return {
       },
     })
 
-    -- ===== LSP server cần cài (mason tự tải) =====
+    -- ===== LSP servers to install (Mason installs these automatically) =====
     require("mason-lspconfig").setup({
       ensure_installed = {
-        "lua_ls",       -- Lua (config nvim)
+        "lua_ls",       -- Lua (this config)
         "gopls",        -- Go
         "ts_ls",        -- JavaScript / TypeScript
-        "eslint",       -- lint JS/TS qua LSP
+        "eslint",       -- lint JS/TS via LSP
         "ansiblels",    -- Ansible
         "terraformls",  -- Terraform / Terragrunt (HCL)
         "dockerls",     -- Dockerfile
         "docker_compose_language_service", -- docker-compose
-        "yamlls",       -- YAML (k8s, ci, ansible schema)
+        "yamlls",       -- YAML (k8s, CI, Ansible schemas)
         "bashls",       -- Bash / shell
         "jsonls",       -- JSON
         "marksman",     -- Markdown
       },
     })
 
-    -- ===== Formatter + linter cài qua mason =====
+    -- ===== Formatters + linters installed via Mason =====
     require("mason-tool-installer").setup({
       ensure_installed = {
         "stylua",       -- format Lua
-        "goimports",    -- format + sắp xếp import Go
-        "gofumpt",      -- format Go nghiêm hơn
-        "prettierd",    -- format js/ts/json/yaml/md (nhanh)
-        "prettier",     -- fallback nếu prettierd lỗi
+        "goimports",    -- format + sort Go imports
+        "gofumpt",      -- stricter Go formatting
+        "prettierd",    -- format js/ts/json/yaml/md (fast)
+        "prettier",     -- fallback if prettierd fails
         "shfmt",        -- format shell
         "shellcheck",   -- lint shell
         "hadolint",     -- lint Dockerfile
@@ -104,7 +104,7 @@ return {
       },
     })
 
-    -- ===== Phím tắt khi 1 server gắn vào buffer =====
+    -- ===== Keymaps applied when a server attaches to a buffer =====
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("lsp_attach_keymaps", { clear = true }),
       callback = function(ev)

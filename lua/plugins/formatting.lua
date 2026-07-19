@@ -1,11 +1,11 @@
 return {
   "stevearc/conform.nvim",
-  -- KHÔNG set `config` ở đây: LazyVim tự gán `config = M.setup` cho
-  -- conform.nvim (lazyvim/plugins/formatting.lua) để tích hợp autoformat
-  -- toggle (<leader>uf/<leader>uF) và LazyVim.format registry. Đè `config`
-  -- sẽ bị LazyVim cảnh báo "Don't set plugin.config" và phá format-on-save.
-  -- Chỉ mở rộng `opts.formatters_by_ft` - opts nhận vào đã có sẵn default
-  -- của LazyVim (lua, fish, sh) và được merge chứ không bị thay thế.
+  -- Don't set `config` here: LazyVim assigns `config = M.setup` itself for
+  -- conform.nvim (lazyvim/plugins/formatting.lua) to wire up the autoformat
+  -- toggle (<leader>uf/<leader>uF) and the LazyVim.format registry. Overriding
+  -- `config` triggers LazyVim's "Don't set plugin.config" warning and breaks
+  -- format-on-save. Only extend `opts.formatters_by_ft` — the incoming opts
+  -- already has LazyVim's defaults (lua, fish, sh) and gets merged, not replaced.
   opts = function(_, opts)
     opts.formatters_by_ft = vim.tbl_deep_extend("force", opts.formatters_by_ft or {}, {
       go = { "goimports", "gofumpt" },
@@ -27,7 +27,8 @@ return {
       ["terraform-vars"] = { "terraform_fmt" },
     })
   end,
-  -- Không cần tự map <leader>cf: LazyVim đã map sẵn (n + x mode) gọi
-  -- LazyVim.format({force=true}) qua format registry, tự tích hợp toggle
-  -- autoformat - map lại ở đây chỉ để trùng và bỏ qua force/registry.
+  -- No need to map <leader>cf ourselves: LazyVim already maps it (normal + visual)
+  -- to LazyVim.format({force=true}) through the format registry, with autoformat
+  -- toggling built in — remapping it here would just shadow that and skip
+  -- force/registry handling.
 }

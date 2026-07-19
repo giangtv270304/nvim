@@ -20,7 +20,7 @@ require("lazy").setup({
   spec = {
     -- LazyVim core + its default plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- LazyVim extras (phải nằm sau lazyvim.plugins, trước plugins của mình)
+    -- LazyVim extras (must come after lazyvim.plugins, before our own plugins)
     { import = "lazyvim.plugins.extras.vscode" },
     -- import/override with your own plugins
     { import = "plugins" },
@@ -36,17 +36,17 @@ require("lazy").setup({
   },
 })
 
--- Nạp hết toàn bộ plugin ngay khi mở nvim (kể cả những plugin lazy-load
--- theo event/keys/cmd/ft), tránh tình trạng phải "dùng thử" một phím/lệnh
--- lần đầu thì plugin mới được load. Tương đương lệnh `:Lazy load all`.
--- Đánh đổi: thời gian khởi động lâu hơn một chút.
+-- Force-load every plugin as soon as Neovim starts, including ones that would
+-- otherwise lazy-load on event/keys/cmd/ft, so the first time you press a key
+-- or run a command it's already ready (equivalent to `:Lazy load all`).
+-- Trade-off: slightly longer startup time.
 --
--- Trong terminal thật: nạp TỪNG plugin một qua vim.schedule (thay vì gọi
--- 1 lần cho tất cả) để redraw được giữa mỗi bước -> hiện được tiến trình
--- loading (giống splash screen) thay vì màn hình đứng im rồi bật hết 1 lúc.
--- Trong VSCode: giữ lối nạp gộp cũ, không hiện tiến trình - vim.notify ở đó
--- là popup thật của VSCode (không tự cập nhật tại chỗ), nạp từng cái một
--- sẽ tạo ra hàng chục popup dồn dập rất khó chịu.
+-- In a real terminal: load plugins one at a time via vim.schedule (instead of
+-- all at once) so the screen can redraw between steps, showing loading
+-- progress like a splash screen instead of freezing then popping everything
+-- in at once. In VSCode: keep the old bulk-load behavior — vim.notify there
+-- is a real VSCode popup that doesn't update in place, so loading one at a
+-- time would spam dozens of popups.
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
   callback = function()
@@ -59,8 +59,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
         return
       end
 
-      -- nạp snacks.nvim trước để các thông báo tiến trình phía sau hiện
-      -- đẹp qua Snacks.notifier thay vì message mặc định của Nvim
+      -- Load snacks.nvim first so the progress notifications below render
+      -- nicely through Snacks.notifier instead of Nvim's default messages
       pcall(function() lazy.load({ plugins = { "snacks.nvim" } }) end)
 
       table.sort(names)
@@ -74,16 +74,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
         if not name then
           local ms = math.floor(((vim.uv or vim.loop).hrtime() - start) / 1e6)
           vim.notify(
-            string.format("Đã tải xong %d plugin (%dms)", total, ms),
+            string.format("Loaded %d plugins (%dms)", total, ms),
             vim.log.levels.INFO,
-            { id = "cfg_loading", title = "Nạp cấu hình", timeout = 1000 }
+            { id = "cfg_loading", title = "Loading config", timeout = 1000 }
           )
           return
         end
         vim.notify(
-          string.format("Đang tải cấu hình... (%d/%d) %s", i, total, name),
+          string.format("Loading config... (%d/%d) %s", i, total, name),
           vim.log.levels.INFO,
-          { id = "cfg_loading", title = "Nạp cấu hình", timeout = false }
+          { id = "cfg_loading", title = "Loading config", timeout = false }
         )
         pcall(function() lazy.load({ plugins = { name } }) end)
         vim.schedule(step)

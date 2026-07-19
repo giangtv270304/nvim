@@ -7,14 +7,14 @@ return {
 			local function map(mode, l, r, desc)
 				vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
 			end
-			-- Nhảy giữa các đoạn thay đổi (hunk)
+			-- Jump between changed hunks
 			map("n", "]c", gs.next_hunk, "Next git hunk")
 			map("n", "[c", gs.prev_hunk, "Prev git hunk")
-			-- Xem / stage / hoàn tác một hunk
+			-- Preview / stage / reset a hunk
 			map("n", "<leader>hp", gs.preview_hunk, "Preview hunk")
 			map("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
 			map("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
-			-- Xem ai sửa dòng này (git blame)
+			-- See who last touched this line (git blame)
 			map("n", "<leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
 		end,
 	},

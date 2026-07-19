@@ -4,7 +4,7 @@ return {
   config = function()
     local lint = require("lint")
 
-    -- Linter không nằm trong LSP (ESLint/gopls đã lo phần của chúng)
+    -- Linters not covered by LSP (ESLint/gopls already handle their own languages)
     lint.linters_by_ft = {
       dockerfile = { "hadolint" },
       ["yaml.ansible"] = { "ansible_lint" },
@@ -12,14 +12,14 @@ return {
       bash = { "shellcheck" },
     }
 
-    -- Bỏ InsertLeave: shellcheck/ansible-lint là process ngoài, spawn lại mỗi
-    -- lần thoát insert mode (tức mỗi lần bấm Esc) gây giật khi sửa sh/ansible.
-    -- Giờ chỉ lint khi lưu file hoặc mở file.
+    -- Deliberately not on InsertLeave: shellcheck/ansible-lint are external
+    -- processes that would respawn on every <Esc> out of insert mode, causing
+    -- stutter while editing sh/ansible files. Only lint on save or on open.
     local group = vim.api.nvim_create_augroup("nvim_lint", { clear = true })
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
       group = group,
       callback = function()
-        -- chỉ lint buffer sửa được (bỏ qua help, readonly...)
+        -- only lint editable buffers (skip help, readonly, etc.)
         if vim.bo.modifiable then
           lint.try_lint()
         end

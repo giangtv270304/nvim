@@ -2,10 +2,10 @@ return {
 	{
 		"ellisonleao/gruvbox.nvim",
 		lazy = true,
-		priority = 1000, -- nạp trước mọi plugin khác (là colorscheme)
+		priority = 1000, -- load before any other plugin (it's the colorscheme)
 	},
 	{
-		-- Đang thử scheme này thay cho gruvbox.nvim - https://github.com/eddyekofo94/gruvbox-flat.nvim
+		-- Trying this out as an alternative to gruvbox.nvim - https://github.com/eddyekofo94/gruvbox-flat.nvim
 		"eddyekofo94/gruvbox-flat.nvim",
 		lazy = true,
 		priority = 1000,
@@ -34,8 +34,8 @@ return {
 		opts = {
 			colorscheme = function()
 				require("gruvbox").setup({
-					contrast = "medium", -- tone Gruvbox Medium
-					transparent_mode = true, -- trong suốt ĐÚNG CÁCH (giữ màu chữ, chỉ bỏ nền)
+					contrast = "medium", -- Gruvbox Medium tone
+					transparent_mode = true, -- transparent background done right (keeps text colors, only drops the background)
 				})
 				vim.o.background = "dark"
 				vim.cmd.colorscheme("gruvbox")
@@ -47,8 +47,8 @@ return {
 		opts = {
 			options = {
 				theme = "gruvbox",
-				globalstatus = true, -- 1 statusline chung cho mọi split
-				-- Không set section_separators/component_separators để dùng mặc định của lualine ( / )
+				globalstatus = true, -- one shared statusline across all splits
+				-- section_separators/component_separators left unset to use lualine's defaults ( / )
 			},
 		},
 	},

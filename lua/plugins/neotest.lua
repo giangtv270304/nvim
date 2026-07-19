@@ -5,8 +5,8 @@ return {
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
-    "fredrikaverpil/neotest-golang", -- adapter Go (bản được duy trì)
-    "nvim-neotest/neotest-jest",     -- adapter JS/TS
+    "fredrikaverpil/neotest-golang", -- Go adapter (actively maintained)
+    "nvim-neotest/neotest-jest",     -- JS/TS adapter
   },
   config = function()
     require("neotest").setup({
@@ -16,13 +16,13 @@ return {
       },
     })
   end,
-  -- Dùng <leader>T (chữ HOA) để không đè <leader>t (tab/terminal)
+  -- Uses <leader>T (capital T) so it doesn't collide with <leader>t (tab/terminal)
   keys = {
-    { "<leader>Tr", function() require("neotest").run.run() end, desc = "Test: chạy test gần nhất" },
-    { "<leader>Tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Test: chạy cả file" },
-    { "<leader>Td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Test: debug (cần DAP)" },
-    { "<leader>Ts", function() require("neotest").summary.toggle() end, desc = "Test: bảng tổng kết" },
-    { "<leader>To", function() require("neotest").output.open({ enter = true }) end, desc = "Test: xem output" },
-    { "<leader>TS", function() require("neotest").run.stop() end, desc = "Test: dừng" },
+    { "<leader>Tr", function() require("neotest").run.run() end, desc = "Test: run nearest" },
+    { "<leader>Tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Test: run file" },
+    { "<leader>Td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Test: debug (requires DAP)" },
+    { "<leader>Ts", function() require("neotest").summary.toggle() end, desc = "Test: summary" },
+    { "<leader>To", function() require("neotest").output.open({ enter = true }) end, desc = "Test: view output" },
+    { "<leader>TS", function() require("neotest").run.stop() end, desc = "Test: stop" },
   },
 }

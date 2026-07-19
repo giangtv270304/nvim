@@ -1,14 +1,15 @@
 -- =============================================================================
---  Bộ phím tắt "pro LazyVim" cho VSCode Neovim (asvetliakov.vscode-neovim)
+--  "Pro LazyVim" keymap set for VSCode Neovim (asvetliakov.vscode-neovim)
 -- =============================================================================
---  * File này CHỈ chạy khi Neovim được nhúng trong VSCode (vim.g.vscode = true).
---    Trong terminal Neovim nó trả về {} nên KHÔNG ảnh hưởng gì.
---  * Mọi lệnh được gọi qua module `vscode` của extension:
---      - vscode.action(name)  -> chạy command VSCode (bất đồng bộ, fire-and-forget)
---      - vscode.call(name)    -> chạy đồng bộ, chờ kết quả (dùng khi cần thứ tự)
---  * Keymap được đăng ký trong sự kiện LazyVimKeymapsDefaults để layer đúng
---    thứ tự sau keymap mặc định của LazyVim (giống cách vscode extra làm).
---  * Tài liệu chi tiết: /Users/mbp/Template/neovim/README.md
+--  * This file ONLY runs when Neovim is embedded in VSCode (vim.g.vscode = true).
+--    In a real terminal it returns {} and has no effect.
+--  * Every command is called through the extension's `vscode` module:
+--      - vscode.action(name)  -> run a VSCode command (async, fire-and-forget)
+--      - vscode.call(name)    -> run synchronously, wait for it to finish
+--        (use when ordering matters)
+--  * Keymaps are registered on the LazyVimKeymapsDefaults event so they layer
+--    in after LazyVim's own default keymaps (same approach as the vscode extra).
+--  * See README.md in this repo for the full VSCode Neovim setup.
 -- =============================================================================
 
 if not vim.g.vscode then
@@ -17,14 +18,14 @@ end
 
 local vscode = require("vscode")
 
--- helper: tạo callback chạy 1 command VSCode
+-- helper: build a callback that runs one VSCode command
 local function action(name)
   return function()
     vscode.action(name)
   end
 end
 
--- helper: chạy đồng bộ (dùng cho thao tác cần hoàn tất trước khi làm việc khác)
+-- helper: run synchronously (for actions that must finish before continuing)
 local function call(name)
   return function()
     vscode.call(name)
@@ -76,8 +77,9 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>fb", action("workbench.action.showAllEditors"), { desc = "Open Buffers" })
     map("n", "<leader>fn", action("workbench.action.files.newUntitledFile"), { desc = "New File" })
     map("n", "<leader>fs", action("workbench.action.files.save"), { desc = "Save File" })
-    -- <leader>e / <leader>E được override trong spec snacks.nvim ở cuối file
-    -- (vì keymap mặc định gắn vào snacks qua `keys=` nên phải override đúng chỗ đó)
+    -- <leader>e / <leader>E are overridden in the snacks.nvim spec at the
+    -- bottom of this file (the default keymaps are attached to snacks via
+    -- `keys=`, so they must be overridden at that same spot)
 
     -- ----------------------------------------------------------------------
     --  Search (<leader>s)
@@ -113,11 +115,11 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>wj", action("workbench.action.focusBelowGroup"), { desc = "Focus Below" })
     map("n", "<leader>wk", action("workbench.action.focusAboveGroup"), { desc = "Focus Above" })
     map("n", "<leader>wl", action("workbench.action.focusRightGroup"), { desc = "Focus Right" })
-    -- Điều hướng group bằng Ctrl-hjkl: KHÔNG map ở đây. VSCode's keybindings.json
-    -- xử lý thẳng 4 phím này (workbench.action.focusXGroup, when neovim.mode=='normal')
-    -- và "vscode-neovim.ctrlKeysForNormalMode" trong settings.json đã loại h/j/k/l
-    -- ra khỏi danh sách extension tự forward vào nvim, nên map ở đây sẽ không
-    -- bao giờ được gọi tới (tránh duplicate keybinding + code chết).
+    -- Ctrl-hjkl group navigation is deliberately NOT mapped here. VSCode's
+    -- keybindings.json handles these 4 keys directly (workbench.action.focusXGroup,
+    -- when neovim.mode=='normal'), and "vscode-neovim.ctrlKeysForNormalMode" in
+    -- settings.json excludes h/j/k/l from the set the extension forwards into
+    -- nvim — so a map here would never fire (avoids a duplicate/dead keybinding).
 
     -- ----------------------------------------------------------------------
     --  Git (<leader>g)
@@ -142,7 +144,7 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>um", action("editor.action.toggleMinimap"), { desc = "Toggle Minimap" })
 
     -- ----------------------------------------------------------------------
-    --  Debug (<leader>d) — dùng debugger của VSCode
+    --  Debug (<leader>d) — uses VSCode's debugger
     -- ----------------------------------------------------------------------
     map("n", "<leader>db", action("editor.debug.action.toggleBreakpoint"), { desc = "Toggle Breakpoint" })
     map("n", "<leader>dc", action("workbench.action.debug.continue"), { desc = "Continue" })
@@ -153,7 +155,7 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>dt", action("workbench.action.debug.stop"), { desc = "Stop" })
 
     -- ----------------------------------------------------------------------
-    --  Test (<leader>t) — dùng Test Explorer của VSCode
+    --  Test (<leader>t) — uses VSCode's Test Explorer
     -- ----------------------------------------------------------------------
     map("n", "<leader>tt", action("testing.runAtCursor"), { desc = "Run Nearest Test" })
     map("n", "<leader>tT", action("testing.runAll"), { desc = "Run All Tests" })
@@ -163,17 +165,18 @@ vim.api.nvim_create_autocmd("User", {
     --  Quit / misc (<leader>q)
     -- ----------------------------------------------------------------------
     map("n", "<leader>qq", action("workbench.action.closeWindow"), { desc = "Quit Window" })
-    -- Esc cũng xoá highlight tìm kiếm (giữ hành vi LazyVim)
+    -- Esc also clears search highlight (keeps LazyVim's behavior)
     map("n", "<Esc>", "<cmd>noh<cr><Esc>", { desc = "Clear search highlight" })
   end,
 })
 
 return {
   -- ------------------------------------------------------------------------
-  --  Override keymap mặc định bị gắn vào snacks.nvim qua `keys=`.
-  --  Snacks explorer/picker mở floating window của neovim mà VSCode KHÔNG
-  --  render được -> bấm vào là "mất hết". Spec người dùng load SAU LazyVim
-  --  nên `keys` trùng lhs ở đây sẽ thắng và gọi command VSCode thay thế.
+  --  Override the default keymaps attached to snacks.nvim via `keys=`.
+  --  Snacks' explorer/picker open floating Neovim windows that VSCode CANNOT
+  --  render -> clicking into them just looks broken. This user spec loads
+  --  AFTER LazyVim, so a matching `keys` lhs here wins and calls the
+  --  equivalent VSCode command instead.
   -- ------------------------------------------------------------------------
   {
     "snacks.nvim",

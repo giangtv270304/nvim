@@ -3,7 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     user_default_options = {
-      names = false, -- không tô các chữ như "red", chỉ tô mã màu
+      names = false, -- don't highlight color names like "red", only actual color codes
       css = true,
       tailwind = true,
     },

@@ -2,7 +2,7 @@ return {
   "kylechui/nvim-surround",
   version = "*",
   event = "VeryLazy",
-  vscode = true, -- giữ hoạt động trong VSCode Neovim (vscode extra chỉ bật mini.surround theo mặc định)
+  vscode = true, -- keep working in VSCode Neovim (the vscode extra only enables mini.surround by default)
   opts = {},
-  -- Dùng: ysiw" (bọc từ trong "), cs"' (đổi " thành '), ds( (xoá cặp ngoặc)
+  -- Usage: ysiw" (wrap word in "), cs"' (change " to '), ds( (remove surrounding brackets)
 }

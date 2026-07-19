@@ -17,8 +17,8 @@ return {
     },
   },
   {
-    -- LazyVim mặc định đã bind sẵn "]f/[f" (move) theo API mới;
-    -- ở đây chỉ bổ sung thêm các textobject "select" (vaf, vif, vac...)
+    -- LazyVim already binds "]f/[f" (move) on the new API by default;
+    -- this only adds the "select" textobjects (vaf, vif, vac...)
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
     keys = {
