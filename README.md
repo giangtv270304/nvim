@@ -66,6 +66,9 @@ KEYMAPS.md                -- full keymap reference
 - **Git:** gitsigns (hunk staging/preview/blame), diffview, and lazygit (`<leader>gg`).
 - **Testing:** neotest, mapped under `<leader>T` (capital T, so it doesn't collide with the
   tab/terminal `<leader>t` maps).
+- **Database:** vim-dadbod + vim-dadbod-ui + vim-dadbod-completion, mapped under `<leader>D`
+  (`<leader>Du` toggles the DB UI sidebar). No connections are pre-configured — add yours with
+  `<leader>Da` after installing.
 - **VSCode Neovim support:** `lazyvim.json` enables `lazyvim.plugins.extras.vscode`, and
   `lua/plugins/vscode.lua` maps the same LazyVim-style keys to native VSCode commands when
   Neovim is embedded in VSCode (via `asvetliakov.vscode-neovim`). Everything else in this repo

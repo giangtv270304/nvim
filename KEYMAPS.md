@@ -22,6 +22,7 @@
 15. [Test (neotest)](#15-test-neotest)
 16. [Terminal](#16-terminal)
 17. [Plain Vim — the fundamentals to know by heart](#17-plain-vim--fundamentals)
+18. [Database (vim-dadbod)](#18-database-vim-dadbod)
 
 ---
 
@@ -284,3 +285,21 @@ Examples: `cif` changes the function body · `daf` deletes the whole function ·
 | `<C-w>` | Delete word before cursor |
 | `<C-u>` | Delete whole line being typed |
 | `<C-o>` + command | Run one normal-mode command, then return to insert |
+
+---
+
+## 18. Database (vim-dadbod)
+
+| Key | Mode | Action |
+|------|------|------|
+| `<leader>Du` | n | Toggle the DB UI sidebar (browse connections/tables) |
+| `<leader>Da` | n | Add a new DB connection |
+| `<leader>Df` | n | Find/jump to the query buffer for the current connection |
+
+No connections are pre-configured — add yours with `<leader>Da` (`:DBUIAddConnection`), which
+saves them under `g:db_ui_save_location` (not committed to git).
+
+Once a `.sql` buffer is connected to a database (via the DB UI or `b:db`), typing table/column
+names triggers completion automatically (vim-dadbod-completion). To run a query, select it in
+visual mode and use the DB UI's default execute mapping (`<Leader>S` in a query buffer opened
+through `:DBUIToggle` — see `:help db_ui-mappings` for the full list).
