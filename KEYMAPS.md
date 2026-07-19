@@ -1,285 +1,286 @@
 # ⌨️ Neovim Keymaps Cheat-Sheet
 
-> `<leader>` = **Space**. Quy ước: `<C-x>` = Ctrl+x, `<S-x>` = Shift+x, `<A-x>` = Alt+x.
-> Cột **Mode**: `n` normal · `i` insert · `v` visual · `t` terminal · `o` operator-pending.
+> `<leader>` = **Space**. Convention: `<C-x>` = Ctrl+x, `<S-x>` = Shift+x, `<A-x>` = Alt+x.
+> **Mode** column: `n` normal · `i` insert · `v` visual · `t` terminal · `o` operator-pending.
 
-## 📑 Mục lục
+## 📑 Table of contents
 
-1. [Cơ bản (lưu / thoát / tìm)](#1-cơ-bản)
-2. [Di chuyển nhanh](#2-di-chuyển-nhanh)
-3. [Cửa sổ & Split](#3-cửa-sổ--split)
-4. [Tab](#4-tab)
-5. [Buffer & Bufferline](#5-buffer--bufferline)
-6. [File Explorer (neo-tree)](#6-file-explorer-neo-tree)
-7. [Tìm kiếm (Telescope)](#7-tìm-kiếm-telescope)
-8. [Harpoon (ghim file)](#8-harpoon-ghim-file)
+1. [Basics (save / quit / search)](#1-basics)
+2. [Fast movement](#2-fast-movement)
+3. [Windows & splits](#3-windows--splits)
+4. [Tabs](#4-tabs)
+5. [Buffers & bufferline](#5-buffers--bufferline)
+6. [File explorer (neo-tree)](#6-file-explorer-neo-tree)
+7. [Search (Telescope)](#7-search-telescope)
+8. [Harpoon (pin files)](#8-harpoon-pin-files)
 9. [LSP (code intelligence)](#9-lsp-code-intelligence)
-10. [Completion (khi gõ code)](#10-completion-khi-gõ-code)
-11. [Chỉnh sửa nâng cao (text object, surround)](#11-chỉnh-sửa-nâng-cao)
-12. [Format & Lint](#12-format--lint)
+10. [Completion (while typing)](#10-completion-while-typing)
+11. [Advanced editing (text objects, surround)](#11-advanced-editing)
+12. [Format & lint](#12-format--lint)
 13. [Diagnostics & Trouble](#13-diagnostics--trouble)
 14. [Git](#14-git)
 15. [Test (neotest)](#15-test-neotest)
 16. [Terminal](#16-terminal)
-17. [Vim thuần — nền tảng phải nhớ](#17-vim-thuần--nền-tảng-phải-nhớ)
+17. [Plain Vim — the fundamentals to know by heart](#17-plain-vim--fundamentals)
 
 ---
 
-## 1. Cơ bản
+## 1. Basics
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>w` | n | Lưu file |
-| `<leader>q` | n | Thoát cửa sổ |
-| `<Esc>` | n | Xoá highlight sau khi tìm |
-| `/` … `n` `N` | n | Tìm trong file · kết quả sau/trước |
-| `<C-d>` `<C-u>` | n | Cuộn nửa trang (con trỏ giữ giữa) |
+| `<leader>w` | n | Save file |
+| `<leader>q` | n | Quit window |
+| `<Esc>` | n | Clear search highlight |
+| `/` … `n` `N` | n | Search in file · next/previous match |
+| `<C-d>` `<C-u>` | n | Scroll half page (cursor stays centered) |
 
 ---
 
-## 2. Di chuyển nhanh
+## 2. Fast movement
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `s` + 2 ký tự | n/v/o | **Flash**: nhảy tới bất kỳ đâu trên màn hình |
-| `S` | n/v/o | **Flash**: nhảy theo khối treesitter |
-| `f<c>` `t<c>` | n | Nhảy tới / trước ký tự `c` trên dòng (`;` `,` lặp) |
-| `%` | n | Nhảy tới ngoặc tương ứng |
-| `*` `#` | n | Nhảy tới từ dưới con trỏ (tiếp / trước) |
-| `{` `}` | n | Nhảy theo đoạn |
-| `<C-o>` `<C-i>` | n | Quay lại / tiến vị trí nhảy (jumplist) |
-| `]f` `[f` | n | Hàm tiếp / trước |
-| `]C` `[C` | n | Class/struct tiếp / trước |
+| `s` + 2 chars | n/v/o | **Flash**: jump anywhere on screen |
+| `S` | n/v/o | **Flash**: jump by Treesitter node |
+| `f<c>` `t<c>` | n | Jump to / before char `c` on the line (`;` `,` repeat) |
+| `%` | n | Jump to matching bracket |
+| `*` `#` | n | Jump to word under cursor (next / previous) |
+| `{` `}` | n | Jump by paragraph |
+| `<C-o>` `<C-i>` | n | Jump back / forward in the jumplist |
+| `]f` `[f` | n | Next / previous function |
+| `]C` `[C` | n | Next / previous class/struct |
 
 ---
 
-## 3. Cửa sổ & Split
+## 3. Windows & splits
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>sv` | n | Chia dọc |
-| `<leader>sh` | n | Chia ngang |
-| `<leader>se` | n | Cân bằng kích thước |
-| `<leader>sx` | n | Đóng ô hiện tại |
-| `<leader>so` | n | Chỉ giữ ô này |
-| `<C-h/j/k/l>` | n | Di chuyển giữa các ô |
-| `<C-↑/↓/←/→>` | n | Đổi kích thước ô |
+| `<leader>sv` | n | Split vertically |
+| `<leader>sh` | n | Split horizontally |
+| `<leader>se` | n | Equalize split sizes |
+| `<leader>sx` | n | Close current split |
+| `<leader>so` | n | Close all other splits |
+| `<C-h/j/k/l>` | n | Move between splits |
+| `<C-↑/↓/←/→>` | n | Resize split |
 
 ---
 
-## 4. Tab
+## 4. Tabs
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>to` | n | Tab mới |
-| `<leader>tx` | n | Đóng tab |
-| `<leader>tn` `<leader>tp` | n | Tab sau / trước |
-| `<leader>tf` | n | Đưa file hiện tại sang tab mới |
-| `gt` `gT` | n | Tab sau / trước (built-in) |
+| `<leader>to` | n | New tab |
+| `<leader>tx` | n | Close tab |
+| `<leader>tn` `<leader>tp` | n | Next / previous tab |
+| `<leader>tf` | n | Move current file to a new tab |
+| `gt` `gT` | n | Next / previous tab (built-in) |
 
 ---
 
-## 5. Buffer & Bufferline
+## 5. Buffers & bufferline
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<S-l>` `<S-h>` | n | Buffer sau / trước |
-| `<leader>b1` `b2` `b3` | n | Nhảy tới buffer 1 / 2 / 3 |
-| `<leader>bd` | n | Đóng buffer hiện tại |
-| `<leader>bo` | n | Đóng các buffer khác |
-| `<leader>bp` | n | Ghim buffer |
+| `<S-l>` `<S-h>` | n | Next / previous buffer |
+| `<leader>b1` `b2` `b3` | n | Jump to buffer 1 / 2 / 3 |
+| `<leader>bd` | n | Close current buffer |
+| `<leader>bo` | n | Close other buffers |
+| `<leader>bp` | n | Pin buffer |
 
 ---
 
-## 6. File Explorer (neo-tree)
+## 6. File explorer (neo-tree)
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>e` | n | Bật/tắt cây thư mục |
-| `l` | (trong tree) | Mở file / mở rộng folder |
-| `h` | (trong tree) | Đóng folder |
-| `s` `S` | (trong tree) | Mở ở split dọc / ngang |
-| `t` | (trong tree) | Mở ở tab mới |
-| `a` `d` `r` `m` | (trong tree) | Thêm / xoá / đổi tên / di chuyển |
-| `H` | (trong tree) | Bật/tắt file ẩn |
-| `/` | (trong tree) | Lọc nhanh |
-| `q` | (trong tree) | Đóng |
+| `<leader>e` | n | Toggle file tree |
+| `l` | (in tree) | Open file / expand folder |
+| `h` | (in tree) | Collapse folder |
+| `s` `S` | (in tree) | Open in vertical / horizontal split |
+| `t` | (in tree) | Open in a new tab |
+| `a` `d` `r` `m` | (in tree) | Add / delete / rename / move |
+| `H` | (in tree) | Toggle hidden files |
+| `/` | (in tree) | Quick filter |
+| `q` | (in tree) | Close |
 
 ---
 
-## 7. Tìm kiếm (Telescope)
+## 7. Search (Telescope)
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>ff` | n | Tìm file theo tên |
-| `<leader>fg` | n | Tìm theo nội dung (live grep) |
-| `<leader>fw` | n | Tìm từ dưới con trỏ |
-| `<leader>fr` | n | File mở gần đây |
-| `<leader>fb` | n | Danh sách buffer |
-| `<leader>fd` | n | Danh sách lỗi (diagnostics) |
-| `<leader>fs` | n | Symbol trong file |
-| `<leader>fh` | n | Trang help |
-| `<leader>fk` | n | Danh sách keymap |
-| `<C-j>` `<C-k>` | (trong picker) | Xuống / lên |
-| `<C-v>` `<C-x>` `<C-t>` | (trong picker) | Mở ở vsplit / split / tab |
-| `<C-q>` | (trong picker) | Đưa kết quả vào quickfix |
+| `<leader>ff` | n | Find files by name |
+| `<leader>fg` | n | Search file contents (live grep) |
+| `<leader>fw` | n | Search word under cursor |
+| `<leader>fr` | n | Recently opened files |
+| `<leader>fb` | n | List buffers |
+| `<leader>fd` | n | List diagnostics |
+| `<leader>fs` | n | Symbols in current file |
+| `<leader>fh` | n | Help pages |
+| `<leader>fk` | n | List keymaps |
+| `<C-j>` `<C-k>` | (in picker) | Move selection down / up |
+| `<C-v>` `<C-x>` `<C-t>` | (in picker) | Open in vsplit / split / tab |
+| `<C-q>` | (in picker) | Send results to quickfix list |
 
 ---
 
-## 8. Harpoon (ghim file)
+## 8. Harpoon (pin files)
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>a` | n | Ghim file hiện tại |
-| `<C-e>` | n | Mở menu harpoon |
-| `<leader>1` … `<leader>4` | n | Nhảy tới file ghim 1–4 |
-| `[h` `]h` | n | File ghim trước / sau |
+| `<leader>a` | n | Pin current file |
+| `<C-e>` | n | Open Harpoon menu |
+| `<leader>1` … `<leader>4` | n | Jump to pinned file 1–4 |
+| `[h` `]h` | n | Previous / next pinned file |
 
 ---
 
 ## 9. LSP (code intelligence)
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `gd` | n | Tới định nghĩa |
-| `gD` | n | Tới khai báo |
-| `gi` | n | Tới implementation |
-| `gr` | n | Xem mọi nơi dùng (references) |
-| `K` | n | Xem docs / kiểu dữ liệu |
-| `<leader>rn` | n | Đổi tên toàn project |
-| `<leader>ca` | n | Code action (sửa nhanh / import) |
-| `<leader>D` | n | Tới type definition |
-| `<leader>ih` | n | Bật/tắt inlay hints |
+| `gd` | n | Go to definition |
+| `gD` | n | Go to declaration |
+| `gi` | n | Go to implementation |
+| `gr` | n | List references |
+| `K` | n | Show hover docs / type info |
+| `<leader>rn` | n | Rename across the project |
+| `<leader>ca` | n | Code action (quick fix / add import) |
+| `<leader>D` | n | Go to type definition |
+| `<leader>ih` | n | Toggle inlay hints |
 
 ---
 
-## 10. Completion (khi gõ code)
+## 10. Completion (while typing)
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<C-Space>` | i | Gọi gợi ý thủ công |
-| `<Tab>` `<S-Tab>` | i | Xuống / lên trong menu (hoặc nhảy snippet) |
-| `<C-n>` `<C-p>` | i | Xuống / lên trong menu |
-| `<CR>` | i | Chọn gợi ý |
-| `<C-e>` | i | Đóng menu |
-| `<C-f>` `<C-b>` | i | Cuộn ô docs |
+| `<C-Space>` | i | Trigger completion manually |
+| `<Tab>` `<S-Tab>` | i | Next / previous item in menu (or jump snippet placeholder) |
+| `<C-n>` `<C-p>` | i | Next / previous item in menu |
+| `<CR>` | i | Confirm selection |
+| `<C-e>` | i | Close menu |
+| `<C-f>` `<C-b>` | i | Scroll the docs popup |
 
 ---
 
-## 11. Chỉnh sửa nâng cao
+## 11. Advanced editing
 
-### Text object theo cấu trúc code (treesitter)
-| Phím | Mode | Việc |
+### Structure-aware text objects (Treesitter)
+| Key | Mode | Action |
 |------|------|------|
-| `af` / `if` | o/v | Cả hàm / thân hàm |
-| `ac` / `ic` | o/v | Cả class-struct / bên trong |
-| `aa` / `ia` | o/v | Cả tham số / bên trong |
+| `af` / `if` | o/v | Around / inner function |
+| `ac` / `ic` | o/v | Around / inner class-struct |
+| `aa` / `ia` | o/v | Around / inner parameter |
 
-Ví dụ: `cif` đổi thân hàm · `daf` xoá cả hàm · `via` chọn 1 tham số.
+Examples: `cif` changes the function body · `daf` deletes the whole function ·
+`via` selects one parameter.
 
 ### Surround (nvim-surround)
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `ys<motion><char>` | n | Bọc: `ysiw"` bọc từ trong `"` |
-| `cs<old><new>` | n | Đổi: `cs"'` đổi `"` thành `'` |
-| `ds<char>` | n | Xoá cặp: `ds(` xoá `()` |
-| `S<char>` | v | Bọc vùng đang chọn |
+| `ys<motion><char>` | n | Add surround: `ysiw"` wraps the word in `"` |
+| `cs<old><new>` | n | Change surround: `cs"'` turns `"` into `'` |
+| `ds<char>` | n | Delete surround: `ds(` removes `()` |
+| `S<char>` | v | Surround the current selection |
 
 ---
 
-## 12. Format & Lint
+## 12. Format & lint
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>cf` | n/v | Format file / vùng chọn |
-| *(tự động)* | — | Format khi lưu (`:w`) |
-| *(tự động)* | — | Lint khi lưu / rời insert |
+| `<leader>cf` | n/v | Format file / selection |
+| *(automatic)* | — | Format on save (`:w`) |
+| *(automatic)* | — | Lint on save / on leaving insert mode |
 
 ---
 
 ## 13. Diagnostics & Trouble
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `]d` `[d` | n | Lỗi tiếp / trước |
-| `<leader>dl` | n | Xem lỗi tại dòng |
-| `<leader>xx` | n | Danh sách toàn bộ lỗi (Trouble) |
-| `<leader>xX` | n | Lỗi trong buffer này |
-| `<leader>xs` | n | Symbol (Trouble) |
-| `<leader>xl` `<leader>xq` | n | Location list / Quickfix |
+| `]d` `[d` | n | Next / previous diagnostic |
+| `<leader>dl` | n | Show diagnostics for current line |
+| `<leader>xx` | n | List all diagnostics (Trouble) |
+| `<leader>xX` | n | Diagnostics for current buffer |
+| `<leader>xs` | n | Symbols (Trouble) |
+| `<leader>xl` `<leader>xq` | n | Location list / quickfix list |
 
 ---
 
 ## 14. Git
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `]c` `[c` | n | Thay đổi (hunk) tiếp / trước |
-| `<leader>hp` | n | Xem trước hunk |
+| `]c` `[c` | n | Next / previous hunk |
+| `<leader>hp` | n | Preview hunk |
 | `<leader>hs` | n | Stage hunk |
-| `<leader>hr` | n | Hoàn tác hunk |
-| `<leader>hb` | n | Blame dòng (ai sửa) |
-| `<leader>gd` | n | Diffview: xem thay đổi |
-| `<leader>gh` | n | Diffview: lịch sử file |
-| `<leader>gc` | n | Diffview: đóng |
-| `<leader>gg` | n | Mở **lazygit** |
+| `<leader>hr` | n | Reset hunk |
+| `<leader>hb` | n | Blame line |
+| `<leader>gd` | n | Diffview: view changes |
+| `<leader>gh` | n | Diffview: file history |
+| `<leader>gc` | n | Diffview: close |
+| `<leader>gg` | n | Open **lazygit** |
 
 ---
 
 ## 15. Test (neotest)
 
-> Dùng `<leader>T` (chữ HOA) để không đè `<leader>t` (tab/terminal).
+> Uses `<leader>T` (capital T) so it doesn't collide with `<leader>t` (tab/terminal).
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<leader>Tr` | n | Chạy test gần con trỏ |
-| `<leader>Tf` | n | Chạy cả file |
-| `<leader>Td` | n | Debug test (cần DAP) |
-| `<leader>Ts` | n | Bảng tổng kết |
-| `<leader>To` | n | Xem output |
-| `<leader>TS` | n | Dừng test |
+| `<leader>Tr` | n | Run nearest test |
+| `<leader>Tf` | n | Run whole file |
+| `<leader>Td` | n | Debug test (requires DAP) |
+| `<leader>Ts` | n | Summary panel |
+| `<leader>To` | n | View output |
+| `<leader>TS` | n | Stop test |
 
 ---
 
 ## 16. Terminal
 
-| Phím | Mode | Việc |
+| Key | Mode | Action |
 |------|------|------|
-| `<C-\>` | n/t | Bật/tắt terminal nổi (toggleterm) |
-| `<leader>gg` | n | Lazygit toàn màn hình |
-| `<leader>th` `<leader>tv` | n | Terminal split ngang / dọc (built-in) |
-| `<Esc><Esc>` | t | Về normal mode trong terminal |
+| `<C-\>` | n/t | Toggle floating terminal (toggleterm) |
+| `<leader>gg` | n | Lazygit, full screen |
+| `<leader>th` `<leader>tv` | n | Horizontal / vertical terminal split (built-in) |
+| `<Esc><Esc>` | t | Back to normal mode inside a terminal |
 
 ---
 
-## 17. Vim thuần — nền tảng phải nhớ
+## 17. Plain Vim — fundamentals
 
-> Không cần plugin. Đây là thứ dùng nhiều nhất khi code.
+> No plugin needed. This is what you'll use the most while coding.
 
-### Text object cơ bản (`i` = inner, `a` = around)
-| Phím | Việc |
+### Basic text objects (`i` = inner, `a` = around)
+| Key | Action |
 |------|------|
-| `ciw` | Đổi từ đang đứng |
-| `ci"` `ci'` `ci\`` | Đổi trong nháy |
-| `ci(` `ci{` `ci[` | Đổi trong ngoặc |
-| `cit` | Đổi trong thẻ HTML/JSX |
-| `dap` | Xoá cả đoạn |
-| `dt,` `ct)` | Xoá / đổi **tới** ký tự `,` `)` |
+| `ciw` | Change word under cursor |
+| `ci"` `ci'` `` ci` `` | Change inside quotes |
+| `ci(` `ci{` `ci[` | Change inside brackets |
+| `cit` | Change inside an HTML/JSX tag |
+| `dap` | Delete whole paragraph |
+| `dt,` `ct)` | Delete / change **up to** char `,` `)` |
 
 ### Power moves
-| Phím | Việc |
+| Key | Action |
 |------|------|
-| `.` | Lặp lại thao tác vừa rồi |
-| `qa` … `q` → `@a` | Ghi / phát macro (`@@` lặp) |
-| `<C-a>` `<C-x>` | Tăng / giảm số dưới con trỏ |
-| `>>` `<<` `==` | Thụt lề phải / trái / tự động |
-| `J` | Nối dòng dưới lên |
-| `gv` | Chọn lại vùng vừa bôi đen |
-| `ddp` `xp` | Đảo 2 dòng / 2 ký tự |
+| `.` | Repeat last change |
+| `qa` … `q` → `@a` | Record / play macro (`@@` repeats it) |
+| `<C-a>` `<C-x>` | Increment / decrement number under cursor |
+| `>>` `<<` `==` | Indent right / left / auto-indent |
+| `J` | Join line below onto current line |
+| `gv` | Reselect last visual selection |
+| `ddp` `xp` | Swap two lines / two characters |
 
 ### Insert mode
-| Phím | Việc |
+| Key | Action |
 |------|------|
-| `<C-w>` | Xoá từ phía trước |
-| `<C-u>` | Xoá cả dòng đang gõ |
-| `<C-o>` + lệnh | Chạy 1 lệnh normal rồi quay lại insert |
+| `<C-w>` | Delete word before cursor |
+| `<C-u>` | Delete whole line being typed |
+| `<C-o>` + command | Run one normal-mode command, then return to insert |
