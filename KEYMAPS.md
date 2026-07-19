@@ -299,7 +299,26 @@ Examples: `cif` changes the function body · `daf` deletes the whole function ·
 No connections are pre-configured — add yours with `<leader>Da` (`:DBUIAddConnection`), which
 saves them under `g:db_ui_save_location` (not committed to git).
 
-Once a `.sql` buffer is connected to a database (via the DB UI or `b:db`), typing table/column
-names triggers completion automatically (vim-dadbod-completion). To run a query, select it in
-visual mode and use the DB UI's default execute mapping (`<Leader>S` in a query buffer opened
-through `:DBUIToggle` — see `:help db_ui-mappings` for the full list).
+### Inside the DBUI sidebar
+| Key | Action |
+|------|------|
+| `o` / `<CR>` | Open / toggle the item under cursor (connection → databases → tables) |
+| `S` | Open the item in a vertical split |
+| `A` | Add a new connection |
+| `d` | Delete a buffer or saved query |
+| `R` | Redraw / refresh the tree |
+| `H` | Toggle connection detail (source of the connection) |
+| `?` | Show all drawer mappings |
+
+### Inside a `sql`/`mysql`/`plsql` buffer
+Table/column completion triggers automatically once the buffer is connected to a database
+(`b:db`, set by opening a query from the DBUI drawer).
+
+| Key | Mode | Action |
+|------|------|------|
+| `<leader>S` | n | Execute the whole buffer as a query |
+| `<leader>S` | v | Execute only the selected lines |
+| `<leader>W` | n | Save the query permanently (to `g:db_ui_save_location`) for reuse |
+| `<leader>E` | n | Edit bind parameters (see `:help vim-dadbod-ui-bind-parameters`) |
+
+Results open in a `dbout` split; `yic` yanks the value of the cell under the cursor.
