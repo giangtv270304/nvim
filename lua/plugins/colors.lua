@@ -52,4 +52,11 @@ return {
 			},
 		},
 	},
+	{
+		-- <leader>uC: browse & live-preview every installed colorscheme, Enter to apply
+		"snacks.nvim",
+		keys = {
+			{ "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes (preview)" },
+		},
+	},
 }
