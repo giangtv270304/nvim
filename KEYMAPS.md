@@ -23,6 +23,7 @@
 16. [Terminal](#16-terminal)
 17. [Plain Vim — the fundamentals to know by heart](#17-plain-vim--fundamentals)
 18. [Database (vim-dadbod)](#18-database-vim-dadbod)
+19. [Tmux integration](#19-tmux-integration)
 
 ---
 
@@ -322,3 +323,23 @@ Table/column completion triggers automatically once the buffer is connected to a
 | `<leader>E` | n | Edit bind parameters (see `:help vim-dadbod-ui-bind-parameters`) |
 
 Results open in a `dbout` split; `yic` yanks the value of the cell under the cursor.
+
+---
+
+## 19. Tmux integration
+
+> Seamless pane navigation between tmux panes and Neovim splits, via
+> `vim-tmux-navigator` (`lua/plugins/tmux-navigator.lua`) paired with matching
+> bindings in `~/.tmux.conf`. Only active in a real terminal + tmux (disabled
+> under VSCode, where `<C-h/j/k/l>` already controls VSCode group focus).
+
+| Key | Mode | Action |
+|------|------|------|
+| `<C-h>` | n / tmux | Go to left pane (Neovim split or tmux pane) |
+| `<C-j>` | n / tmux | Go to below pane |
+| `<C-k>` | n / tmux | Go to above pane |
+| `<C-l>` | n / tmux | Go to right pane |
+
+The same four keys work whether the focus is currently a Neovim split or a
+tmux pane, so `<C-l>` twice can cross from one Neovim split straight into an
+adjacent tmux pane without a prefix key.
