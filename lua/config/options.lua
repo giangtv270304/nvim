@@ -6,6 +6,13 @@ vim.g.lazyvim_cmp = "nvim-cmp"
 vim.g.lazyvim_explorer = "neo-tree"
 vim.g.lazyvim_picker = "telescope"
 
+-- Neovim only detects *.tf as filetype "terraform" once the file has a
+-- non-blank line (it's disambiguating from TinyFugue's old "tf" config
+-- format). A brand-new empty .tf buffer falls back to "tf", so LSP/format/
+-- treesitter never attach until the file is saved with content and reopened.
+-- Force it unconditionally since nobody edits TinyFugue configs anymore.
+vim.filetype.add({ extension = { tf = "terraform" } })
+
 local opt = vim.opt
 
 -- Line numbers

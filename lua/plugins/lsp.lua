@@ -70,6 +70,16 @@ return {
       },
     })
 
+    -- terragrunt.hcl is filetype "hcl" (not "terraform"), so add it here or
+    -- terraform-ls / tflint (auto-enabled by mason-lspconfig since the
+    -- tflint binary is installed) never attach to Terragrunt files.
+    vim.lsp.config("terraformls", {
+      filetypes = { "terraform", "terraform-vars", "hcl" },
+    })
+    vim.lsp.config("tflint", {
+      filetypes = { "terraform", "hcl" },
+    })
+
     -- ===== LSP servers to install (Mason installs these automatically) =====
     require("mason-lspconfig").setup({
       ensure_installed = {
