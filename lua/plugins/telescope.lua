@@ -1,3 +1,10 @@
+-- Telescope's floating pickers can't render inside VSCode, and its <leader>ff/
+-- fg/fb/fr clobber vscode.lua's mappings for the same keys (VSCode's own
+-- Quick Open / Find in Files / editor list take over instead).
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "nvim-telescope/telescope.nvim",
   tag = "0.1.8",

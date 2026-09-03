@@ -1,3 +1,13 @@
+-- This spawns real LSP servers (mason/lspconfig) and sets BUFFER-LOCAL
+-- gd/gD/gr/K/<leader>ca maps on every LspAttach. Buffer-local maps always
+-- win over vscode.lua's global ones, so without this guard, LSP navigation
+-- silently breaks on almost every file you open inside VSCode (which already
+-- runs its own LSP extensions - running both also means duplicate/competing
+-- diagnostics and hover). Disabled entirely inside VSCode.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },

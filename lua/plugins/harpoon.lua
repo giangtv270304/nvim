@@ -1,3 +1,10 @@
+-- Harpoon's ]h/[h clobber vscode.lua's Next/Prev Git Change mappings for the
+-- same keys, and its quick-menu is a floating nvim window VSCode can't
+-- render. Disabled inside VSCode (no good 1:1 VSCode equivalent).
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2", -- newer branch, cleaner API

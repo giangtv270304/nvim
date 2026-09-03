@@ -1,3 +1,11 @@
+-- toggleterm's <leader>gg (lazygit in a floating nvim terminal) clobbers
+-- vscode.lua's <leader>gg (open Source Control). The floating terminal also
+-- can't render inside VSCode. Disabled inside VSCode; use VSCode's own
+-- integrated terminal / Source Control view instead.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "akinsho/toggleterm.nvim",
   version = "*",

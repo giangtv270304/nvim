@@ -109,6 +109,13 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>wv", action("workbench.action.splitEditor"), { desc = "Split Right" })
     map("n", "<leader>ws", action("workbench.action.splitEditorDown"), { desc = "Split Down" })
     map("n", "<leader>wd", action("workbench.action.closeEditorsInGroup"), { desc = "Close Group" })
+    -- Aliases matching the terminal's <leader>s* split keymaps (config/keymaps.lua)
+    -- so the same muscle memory works in both places.
+    map("n", "<leader>sv", action("workbench.action.splitEditor"), { desc = "Split Right" })
+    map("n", "<leader>sh", action("workbench.action.splitEditorDown"), { desc = "Split Down" })
+    map("n", "<leader>se", action("workbench.action.evenEditorWidths"), { desc = "Equalize Splits" })
+    map("n", "<leader>sx", action("workbench.action.closeActiveEditor"), { desc = "Close Split" })
+    map("n", "<leader>so", action("workbench.action.closeEditorsInOtherGroups"), { desc = "Close Other Splits" })
     map("n", "<leader>ww", action("workbench.action.focusNextGroup"), { desc = "Other Group" })
     map("n", "<leader>wm", action("workbench.action.toggleMaximizeEditorGroup"), { desc = "Maximize Group" })
     map("n", "<leader>wh", action("workbench.action.focusLeftGroup"), { desc = "Focus Left" })

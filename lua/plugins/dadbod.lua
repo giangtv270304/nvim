@@ -1,3 +1,9 @@
+-- DB UI is a real nvim buffer tree/split that can't render inside VSCode.
+-- Use a dedicated VSCode DB extension there instead.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   {
     "tpope/vim-dadbod",

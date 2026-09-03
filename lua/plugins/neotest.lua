@@ -1,3 +1,10 @@
+-- Neotest's summary/output panels are real nvim splits/floats that can't
+-- render inside VSCode. Use VSCode's own Test Explorer (vscode.lua's
+-- <leader>tt/tT/td) there instead.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "nvim-neotest/neotest",
   dependencies = {

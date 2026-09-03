@@ -1,3 +1,9 @@
+-- Trouble's <leader>xx/xl clobber vscode.lua's mappings to VSCode's native
+-- Problems panel, and its own list view can't render inside VSCode.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "folke/trouble.nvim",
   cmd = "Trouble",

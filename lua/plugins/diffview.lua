@@ -1,3 +1,9 @@
+-- Diffview's <leader>gd/gh clobber vscode.lua's mappings to VSCode's native
+-- git diff/history, and its own tabs can't render inside VSCode.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "sindrets/diffview.nvim",
   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFileHistory" },

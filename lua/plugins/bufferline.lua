@@ -1,3 +1,10 @@
+-- bufferline's own <leader>bp/bo clobber vscode.lua's Pin/Close-Others
+-- mappings, and its state (real nvim buffer list) desyncs from VSCode's
+-- actual tab bar anyway. Disabled inside VSCode.
+if vim.g.vscode then
+  return {}
+end
+
 return {
   "akinsho/bufferline.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
