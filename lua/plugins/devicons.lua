@@ -1,8 +1,5 @@
--- Recolor nvim-web-devicons to match VSCode's Material Icon Theme
--- (pkief.material-icon-theme) palette, for visual parity between the two.
--- Keeps the plugin's own icon glyph/name per extension — only the color
--- changes, fetched from the plugin's own defaults so we never guess a wrong
--- Nerd Font codepoint.
+-- Recolor nvim-web-devicons to match VSCode's Material Icon Theme palette,
+-- keeping each extension's own icon glyph (only the color changes).
 local material_ext_colors = {
   js = "#f4d03f",
   mjs = "#f4d03f",

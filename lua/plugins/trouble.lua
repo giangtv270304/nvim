@@ -1,5 +1,4 @@
--- Trouble's <leader>xx/xl clobber vscode.lua's mappings to VSCode's native
--- Problems panel, and its own list view can't render inside VSCode.
+-- Can't render in VSCode; vscode.lua's <leader>xx/xl open the native Problems panel instead.
 if vim.g.vscode then
   return {}
 end

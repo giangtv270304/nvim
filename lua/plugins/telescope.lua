@@ -1,6 +1,4 @@
--- Telescope's floating pickers can't render inside VSCode, and its <leader>ff/
--- fg/fb/fr clobber vscode.lua's mappings for the same keys (VSCode's own
--- Quick Open / Find in Files / editor list take over instead).
+-- Floating pickers can't render inside VSCode; vscode.lua covers these keys instead.
 if vim.g.vscode then
   return {}
 end

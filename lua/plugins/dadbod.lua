@@ -1,5 +1,4 @@
--- DB UI is a real nvim buffer tree/split that can't render inside VSCode.
--- Use a dedicated VSCode DB extension there instead.
+-- Real nvim split can't render in VSCode; use a dedicated VSCode DB extension there.
 if vim.g.vscode then
   return {}
 end

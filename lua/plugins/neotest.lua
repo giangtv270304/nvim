@@ -1,6 +1,4 @@
--- Neotest's summary/output panels are real nvim splits/floats that can't
--- render inside VSCode. Use VSCode's own Test Explorer (vscode.lua's
--- <leader>tt/tT/td) there instead.
+-- Can't render in VSCode; vscode.lua's <leader>tt/tT/td use the native Test Explorer instead.
 if vim.g.vscode then
   return {}
 end

@@ -1,16 +1,7 @@
--- =============================================================================
---  "Pro LazyVim" keymap set for VSCode Neovim (asvetliakov.vscode-neovim)
--- =============================================================================
---  * This file ONLY runs when Neovim is embedded in VSCode (vim.g.vscode = true).
---    In a real terminal it returns {} and has no effect.
---  * Every command is called through the extension's `vscode` module:
---      - vscode.action(name)  -> run a VSCode command (async, fire-and-forget)
---      - vscode.call(name)    -> run synchronously, wait for it to finish
---        (use when ordering matters)
---  * Keymaps are registered on the LazyVimKeymapsDefaults event so they layer
---    in after LazyVim's own default keymaps (same approach as the vscode extra).
---  * See README.md in this repo for the full VSCode Neovim setup.
--- =============================================================================
+-- "Pro LazyVim" keymap set for VSCode Neovim (asvetliakov.vscode-neovim).
+-- Only runs when embedded in VSCode (vim.g.vscode); no-op in a real terminal.
+-- action() fires a VSCode command async, call() runs it synchronously.
+-- See README.md in this repo for the full setup.
 
 if not vim.g.vscode then
   return {}
@@ -18,14 +9,12 @@ end
 
 local vscode = require("vscode")
 
--- helper: build a callback that runs one VSCode command
 local function action(name)
   return function()
     vscode.action(name)
   end
 end
 
--- helper: run synchronously (for actions that must finish before continuing)
 local function call(name)
   return function()
     vscode.call(name)
@@ -37,9 +26,7 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     local map = vim.keymap.set
 
-    -- ----------------------------------------------------------------------
-    --  LSP / Code navigation
-    -- ----------------------------------------------------------------------
+    -- LSP / Code navigation
     map("n", "gd", action("editor.action.revealDefinition"), { desc = "Goto Definition" })
     map("n", "gD", action("editor.action.revealDeclaration"), { desc = "Goto Declaration" })
     map("n", "gr", action("editor.action.goToReferences"), { desc = "References" })
@@ -48,9 +35,7 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "gp", action("editor.action.peekDefinition"), { desc = "Peek Definition" })
     map("n", "K", action("editor.action.showHover"), { desc = "Hover" })
 
-    -- ----------------------------------------------------------------------
-    --  Code actions (<leader>c)
-    -- ----------------------------------------------------------------------
+    -- Code actions (<leader>c)
     map("n", "<leader>ca", action("editor.action.quickFix"), { desc = "Code Action" })
     map("n", "<leader>cr", action("editor.action.rename"), { desc = "Rename Symbol" })
     map("n", "<leader>cd", action("editor.action.showHover"), { desc = "Line Diagnostics" })
@@ -60,17 +45,13 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>cs", action("workbench.action.gotoSymbol"), { desc = "Symbols (file)" })
     map("n", "<leader>cS", action("workbench.action.showAllSymbols"), { desc = "Symbols (workspace)" })
 
-    -- ----------------------------------------------------------------------
-    --  Diagnostics & git hunk navigation
-    -- ----------------------------------------------------------------------
+    -- Diagnostics & git hunk navigation
     map("n", "]d", action("editor.action.marker.nextInFiles"), { desc = "Next Diagnostic" })
     map("n", "[d", action("editor.action.marker.prevInFiles"), { desc = "Prev Diagnostic" })
     map("n", "]h", action("workbench.action.editor.nextChange"), { desc = "Next Git Change" })
     map("n", "[h", action("workbench.action.editor.previousChange"), { desc = "Prev Git Change" })
 
-    -- ----------------------------------------------------------------------
-    --  Find / Files (<leader>f) + Explorer
-    -- ----------------------------------------------------------------------
+    -- Find / Files (<leader>f) + Explorer
     map("n", "<leader>ff", action("workbench.action.quickOpen"), { desc = "Find Files" })
     map("n", "<leader>fr", action("workbench.action.openRecent"), { desc = "Recent Files" })
     map("n", "<leader>fg", action("workbench.action.findInFiles"), { desc = "Grep (find in files)" })
@@ -81,9 +62,7 @@ vim.api.nvim_create_autocmd("User", {
     -- bottom of this file (the default keymaps are attached to snacks via
     -- `keys=`, so they must be overridden at that same spot)
 
-    -- ----------------------------------------------------------------------
-    --  Search (<leader>s)
-    -- ----------------------------------------------------------------------
+    -- Search (<leader>s)
     map("n", "<leader>sg", action("workbench.action.findInFiles"), { desc = "Grep" })
     map("n", "<leader>sr", action("workbench.action.replaceInFiles"), { desc = "Search & Replace" })
     map("n", "<leader>sd", action("workbench.actions.view.problems"), { desc = "Diagnostics" })
@@ -94,18 +73,15 @@ vim.api.nvim_create_autocmd("User", {
       vscode.action("workbench.action.findInFiles", { args = { query = vim.fn.expand("<cword>") } })
     end, { desc = "Search word under cursor" })
 
-    -- ----------------------------------------------------------------------
-    --  Buffers (<leader>b) + tab navigation
-    -- ----------------------------------------------------------------------
+    -- Buffers (<leader>b) + tab navigation
     map("n", "<leader>bd", action("workbench.action.closeActiveEditor"), { desc = "Close Buffer" })
     map("n", "<leader>bo", action("workbench.action.closeOtherEditors"), { desc = "Close Others" })
     map("n", "<leader>bp", action("workbench.action.pinEditor"), { desc = "Pin Buffer" })
-    map("n", "<S-h>", call("workbench.action.previousEditor"), { desc = "Prev Buffer" })
-    map("n", "<S-l>", call("workbench.action.nextEditor"), { desc = "Next Buffer" })
+    -- <S-h>/<S-l> not mapped here: LazyVim's own vscode extra
+    -- (lazyvim/plugins/extras/vscode.lua) already binds these to the exact
+    -- same previousEditor/nextEditor commands.
 
-    -- ----------------------------------------------------------------------
-    --  Windows / Editor groups (<leader>w + <C-hjkl>)
-    -- ----------------------------------------------------------------------
+    -- Windows / Editor groups (<leader>w + <C-hjkl>)
     map("n", "<leader>wv", action("workbench.action.splitEditor"), { desc = "Split Right" })
     map("n", "<leader>ws", action("workbench.action.splitEditorDown"), { desc = "Split Down" })
     map("n", "<leader>wd", action("workbench.action.closeEditorsInGroup"), { desc = "Close Group" })
@@ -122,37 +98,26 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>wj", action("workbench.action.focusBelowGroup"), { desc = "Focus Below" })
     map("n", "<leader>wk", action("workbench.action.focusAboveGroup"), { desc = "Focus Above" })
     map("n", "<leader>wl", action("workbench.action.focusRightGroup"), { desc = "Focus Right" })
-    -- Ctrl-hjkl group navigation is deliberately NOT mapped here. VSCode's
-    -- keybindings.json handles these 4 keys directly (workbench.action.focusXGroup,
-    -- when neovim.mode=='normal'), and "vscode-neovim.ctrlKeysForNormalMode" in
-    -- settings.json excludes h/j/k/l from the set the extension forwards into
-    -- nvim — so a map here would never fire (avoids a duplicate/dead keybinding).
+    -- Ctrl-hjkl group nav is handled directly in VSCode's keybindings.json,
+    -- not here (settings.json excludes h/j/k/l from the keys forwarded to nvim).
 
-    -- ----------------------------------------------------------------------
-    --  Git (<leader>g)
-    -- ----------------------------------------------------------------------
+    -- Git (<leader>g)
     map("n", "<leader>gg", action("workbench.view.scm"), { desc = "Source Control" })
     map("n", "<leader>gb", action("gitlens.toggleFileBlame"), { desc = "Toggle Blame (GitLens)" })
     map("n", "<leader>gd", action("git.openChange"), { desc = "Open Diff" })
     map("n", "<leader>gh", action("git.viewFileHistory"), { desc = "File History" })
 
-    -- ----------------------------------------------------------------------
-    --  Diagnostics list / Trouble (<leader>x)
-    -- ----------------------------------------------------------------------
+    -- Diagnostics list / Trouble (<leader>x)
     map("n", "<leader>xx", action("workbench.actions.view.problems"), { desc = "Problems" })
     map("n", "<leader>xl", action("workbench.actions.view.problems"), { desc = "Problems" })
 
-    -- ----------------------------------------------------------------------
-    --  UI toggles (<leader>u)
-    -- ----------------------------------------------------------------------
+    -- UI toggles (<leader>u)
     map("n", "<leader>uw", action("editor.action.toggleWordWrap"), { desc = "Toggle Word Wrap" })
     map("n", "<leader>uz", action("workbench.action.toggleZenMode"), { desc = "Zen Mode" })
     map("n", "<leader>uc", action("workbench.action.selectTheme"), { desc = "Colorscheme" })
     map("n", "<leader>um", action("editor.action.toggleMinimap"), { desc = "Toggle Minimap" })
 
-    -- ----------------------------------------------------------------------
-    --  Debug (<leader>d) — uses VSCode's debugger
-    -- ----------------------------------------------------------------------
+    -- Debug (<leader>d) — uses VSCode's debugger
     map("n", "<leader>db", action("editor.debug.action.toggleBreakpoint"), { desc = "Toggle Breakpoint" })
     map("n", "<leader>dc", action("workbench.action.debug.continue"), { desc = "Continue" })
     map("n", "<leader>dC", action("workbench.action.debug.run"), { desc = "Run / Start" })
@@ -161,16 +126,12 @@ vim.api.nvim_create_autocmd("User", {
     map("n", "<leader>dO", action("workbench.action.debug.stepOut"), { desc = "Step Out" })
     map("n", "<leader>dt", action("workbench.action.debug.stop"), { desc = "Stop" })
 
-    -- ----------------------------------------------------------------------
-    --  Test (<leader>t) — uses VSCode's Test Explorer
-    -- ----------------------------------------------------------------------
+    -- Test (<leader>t) — uses VSCode's Test Explorer
     map("n", "<leader>tt", action("testing.runAtCursor"), { desc = "Run Nearest Test" })
     map("n", "<leader>tT", action("testing.runAll"), { desc = "Run All Tests" })
     map("n", "<leader>td", action("testing.debugAtCursor"), { desc = "Debug Nearest Test" })
 
-    -- ----------------------------------------------------------------------
-    --  Quit / misc (<leader>q)
-    -- ----------------------------------------------------------------------
+    -- Quit / misc (<leader>q)
     map("n", "<leader>qq", action("workbench.action.closeWindow"), { desc = "Quit Window" })
     -- Esc also clears search highlight (keeps LazyVim's behavior)
     map("n", "<Esc>", "<cmd>noh<cr><Esc>", { desc = "Clear search highlight" })
@@ -178,24 +139,14 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 return {
-  -- ------------------------------------------------------------------------
-  --  Override the default keymaps attached to snacks.nvim via `keys=`.
-  --  Snacks' explorer/picker open floating Neovim windows that VSCode CANNOT
-  --  render -> clicking into them just looks broken. This user spec loads
-  --  AFTER LazyVim, so a matching `keys` lhs here wins and calls the
-  --  equivalent VSCode command instead.
-  -- ------------------------------------------------------------------------
+  -- Overrides snacks.nvim's own <leader>e/E (its explorer can't render in VSCode).
+  -- Must go here, not in the map() block above: this loads after LazyVim's
+  -- own snacks spec, so it wins over the default keymap.
   {
     "snacks.nvim",
     keys = {
       { "<leader>e", function() vscode.action("workbench.files.action.focusFilesExplorer") end, desc = "Focus Explorer" },
       { "<leader>E", function() vscode.action("workbench.action.toggleSidebarVisibility") end, desc = "Toggle Sidebar" },
-      { "<leader>ff", function() vscode.action("workbench.action.quickOpen") end, desc = "Find Files" },
-      { "<leader>fg", function() vscode.action("workbench.action.findInFiles") end, desc = "Grep" },
-      { "<leader>fr", function() vscode.action("workbench.action.openRecent") end, desc = "Recent Files" },
-      { "<leader>fb", function() vscode.action("workbench.action.showAllEditors") end, desc = "Buffers" },
-      { "<leader>sg", function() vscode.action("workbench.action.findInFiles") end, desc = "Grep" },
-      { "<leader>gg", function() vscode.action("workbench.view.scm") end, desc = "Source Control" },
     },
   },
 }

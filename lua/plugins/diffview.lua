@@ -1,5 +1,4 @@
--- Diffview's <leader>gd/gh clobber vscode.lua's mappings to VSCode's native
--- git diff/history, and its own tabs can't render inside VSCode.
+-- Can't render in VSCode; vscode.lua's <leader>gd/gh open native git diff/history instead.
 if vim.g.vscode then
   return {}
 end

@@ -1,6 +1,4 @@
--- Harpoon's ]h/[h clobber vscode.lua's Next/Prev Git Change mappings for the
--- same keys, and its quick-menu is a floating nvim window VSCode can't
--- render. Disabled inside VSCode (no good 1:1 VSCode equivalent).
+-- Clobbers vscode.lua's ]h/[h (git change nav); no good VSCode equivalent, disabled instead.
 if vim.g.vscode then
   return {}
 end

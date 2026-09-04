@@ -1,6 +1,4 @@
--- bufferline's own <leader>bp/bo clobber vscode.lua's Pin/Close-Others
--- mappings, and its state (real nvim buffer list) desyncs from VSCode's
--- actual tab bar anyway. Disabled inside VSCode.
+-- Desyncs from VSCode's real tab bar; vscode.lua covers pin/close instead.
 if vim.g.vscode then
   return {}
 end
