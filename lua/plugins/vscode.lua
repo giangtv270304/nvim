@@ -145,8 +145,8 @@ return {
   {
     "snacks.nvim",
     keys = {
-      { "<leader>e", function() vscode.action("workbench.view.explorer") end, desc = "Toggle Explorer" },
-      { "<leader>E", function() vscode.action("workbench.action.toggleSidebarVisibility") end, desc = "Toggle Sidebar" },
+      { "<leader>e", function() vscode.action("workbench.action.toggleSidebarVisibility") end, desc = "Toggle Explorer" },
+      { "<leader>E", function() vscode.action("workbench.view.explorer") end, desc = "Focus Explorer" },
     },
   },
 }
